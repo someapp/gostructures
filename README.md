@@ -35,3 +35,23 @@ stack.Push(23)
 value, err := stack.Pop()
 assert(value == 23)
 ```
+
+Queue
+-----
+
+A FIFO Queue implemented as a linked list
+
+```
+queue := NewQueue()
+queue.Push(21)
+queue.Push(42)
+
+value, err := queue.Pop()
+assert(value == 21)
+
+value, err = queue.Pop()
+assert(value == 42)
+
+value, err = queue.Pop()
+assert(err == errors.New("empty queue"))
+```
