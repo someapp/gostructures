@@ -55,3 +55,20 @@ assert(value == 42)
 value, err = queue.Pop()
 assert(err == errors.New("empty queue"))
 ```
+
+BitVector
+---------
+
+A BitVector stores as a list of 64 bit ints
+
+```
+vec := NewBitVector(100)
+
+vec.Add(7)
+vec.Add(23)
+vec.Add(64)
+vec.Add(99)
+
+assert(vec.Contains(23))
+assert(!vec.Contains(77))
+```
