@@ -22,7 +22,7 @@ func (s *MultiStack) topStack() *Stack {
 	return s.stacks[len(s.stacks)-1]
 }
 
-func (s *MultiStack) Push(value int) {
+func (s *MultiStack) Push(value interface{}) {
 	stack := s.topStack()
 
 	if stack.Length() >= s.stackLimit {
@@ -35,7 +35,7 @@ func (s *MultiStack) Push(value int) {
 	s.length++
 }
 
-func (s *MultiStack) Pop() (int, error) {
+func (s *MultiStack) Pop() (interface{}, error) {
 	if s.length == 0 {
 		return 0, errors.New("empty stack")
 	}

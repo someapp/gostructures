@@ -14,10 +14,10 @@ func NewQueue() Queue {
 
 type queueNode struct {
 	next  *queueNode
-	value int
+	value interface{}
 }
 
-func (q *Queue) Push(value int) {
+func (q *Queue) Push(value interface{}) {
 	next := queueNode{
 		value: value,
 	}
@@ -32,7 +32,7 @@ func (q *Queue) Push(value int) {
 	q.length++
 }
 
-func (q *Queue) Pop() (int, error) {
+func (q *Queue) Pop() (interface{}, error) {
 	if q.length == 0 {
 		return 0, errors.New("empty queue")
 	}

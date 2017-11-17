@@ -13,10 +13,10 @@ func NewStack() Stack {
 
 type stackNode struct {
 	next  *stackNode
-	value int
+	value interface{}
 }
 
-func (s *Stack) Push(value int) {
+func (s *Stack) Push(value interface{}) {
 	next := stackNode{
 		next:  s.head,
 		value: value,
@@ -26,7 +26,7 @@ func (s *Stack) Push(value int) {
 	s.length++
 }
 
-func (s *Stack) Pop() (int, error) {
+func (s *Stack) Pop() (interface{}, error) {
 	if s.length == 0 {
 		return 0, errors.New("empty stack")
 	}
