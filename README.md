@@ -72,3 +72,19 @@ vec.Add(99)
 assert(vec.Contains(23))
 assert(!vec.Contains(77))
 ```
+
+MaxHeap
+-------
+
+A tree structure that always keeps the max value at the top
+
+```
+heap := NewMaxHeap()
+heap.Push(7)
+heap.Push(23)
+
+assert(heap.Max() == 23)
+
+heap.Pop()
+assert(heap.Max() == 7)
+```
