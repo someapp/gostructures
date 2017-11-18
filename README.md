@@ -10,7 +10,7 @@ Stack
 
 A Stack implemented as a linked list
 
-```
+``` go
 stack := NewStack()
 stack.Push(23)
 
@@ -27,7 +27,7 @@ MultiStack
 A Stack of Stacks
 that resizes
 
-```
+``` go
 // with a maxlength of 64 for each stack
 stack := NewMultiStack(64)
 stack.Push(23)
@@ -41,7 +41,7 @@ Queue
 
 A FIFO Queue implemented as a linked list
 
-```
+``` go
 queue := NewQueue()
 queue.Push(21)
 queue.Push(42)
@@ -61,7 +61,7 @@ BitVector
 
 A BitVector stores as a list of 64 bit ints
 
-```
+``` go
 vec := NewBitVector(100)
 
 vec.Add(7)
@@ -78,7 +78,7 @@ MaxHeap
 
 A tree structure that always keeps the max value at the top
 
-```
+``` go
 heap := NewMaxHeap()
 heap.Push(7)
 heap.Push(23)
