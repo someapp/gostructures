@@ -88,3 +88,22 @@ assert(heap.Max() == 23)
 heap.Pop()
 assert(heap.Max() == 7)
 ```
+
+[Graph](graph.go)
+-----
+
+A directional Graph implemented with a vertex list
+with adjency list for each vertex
+
+``` go
+graph := NewGraph()
+graph.AddVertex("a")
+graph.AddVertex("b")
+graph.AddVertex("c")
+
+graph.AddEdge("a", "b")
+graph.AddEdge("a", "c")
+
+assert(GraphConnected(&graph, "a", "b"))
+assert(!GraphConnected(&graph, "b", "c"))
+```
