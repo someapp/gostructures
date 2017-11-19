@@ -6,7 +6,7 @@ GoStructures
 Building Classic Data Structures in Go
 
 [Stack](stack.go)
------
+-----------------
 
 A Stack implemented as a linked list
 
@@ -22,7 +22,7 @@ assert(err == errors.New("empty stack"))
 ```
 
 [MultiStack](multi_stack.go)
-----------
+----------------------------
 
 A Stack of Stacks
 that resizes
@@ -37,7 +37,7 @@ assert(value == 23)
 ```
 
 [Queue](queue.go)
------
+-----------------
 
 A FIFO Queue implemented as a linked list
 
@@ -57,7 +57,7 @@ assert(err == errors.New("empty queue"))
 ```
 
 [BitVector](bit_vector.go)
----------
+--------------------------
 
 A BitVector stores as a list of 64 bit ints
 
@@ -74,7 +74,7 @@ assert(!vec.Contains(77))
 ```
 
 [MaxHeap](max_heap.go)
--------
+----------------------
 
 A tree structure that always keeps the max value at the top
 
@@ -90,7 +90,7 @@ assert(heap.Max() == 7)
 ```
 
 [Graph](graph.go)
------
+-----------------
 
 A directional Graph implemented with a vertex list
 with adjency list for each vertex
