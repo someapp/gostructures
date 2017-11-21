@@ -23,13 +23,13 @@ func TestRobotMaze_Completable(t *testing.T) {
 	}
 
 	expectedPath := []RobotMazePoint{
-		{x: 0, y: 0},
-		{x: 0, y: 1},
-		{x: 1, y: 1},
-		{x: 2, y: 1},
-		{x: 2, y: 2},
-		{x: 2, y: 3},
-		{x: 3, y: 3},
+		{0, 0},
+		{0, 1},
+		{1, 1},
+		{2, 1},
+		{2, 2},
+		{2, 3},
+		{3, 3},
 	}
 	if !reflect.DeepEqual(expectedPath, path) {
 		t.Error("unexpected path")
