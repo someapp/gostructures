@@ -38,14 +38,14 @@ func TestRobotMaze_Completable(t *testing.T) {
 
 func TestRobotMaze_NotCompletable(t *testing.T) {
 	// -X--
-	// -X-X
-	// -X-X
 	// X---
+	// ----
+	// ----
 	maze := [][]bool{
 		[]bool{true, false, true, true},
-		[]bool{true, false, true, false},
-		[]bool{true, false, true, false},
 		[]bool{false, true, true, true},
+		[]bool{true, true, true, true},
+		[]bool{true, true, true, true},
 	}
 
 	_, ok := RobotMaze(maze)
