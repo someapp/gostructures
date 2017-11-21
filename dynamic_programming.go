@@ -4,12 +4,12 @@ package gostructures
 // can the robot navigate from the top left to bottom right
 // and if so return a possible path
 func RobotMaze(maze [][]bool) ([]RobotMazePoint, bool) {
-	// cache impossible paths
-	cache := make(map[[2]int]bool)
-	return robotMazePath(maze, len(maze)-1, len(maze[0])-1, &cache)
+	// cache unreachable points
+	unreachable := make(map[RobotMazePoint]bool)
+	return robotMazePath(maze, len(maze)-1, len(maze[0])-1, &unreachable)
 }
 
-func robotMazePath(maze [][]bool, row int, col int, cache *map[[2]int]bool) ([]RobotMazePoint, bool) {
+func robotMazePath(maze [][]bool, row int, col int, unreachable *map[RobotMazePoint]bool) ([]RobotMazePoint, bool) {
 	point := RobotMazePoint{col, row}
 
 	if row == 0 && col == 0 {
@@ -22,22 +22,21 @@ func robotMazePath(maze [][]bool, row int, col int, cache *map[[2]int]bool) ([]R
 
 	// if we previously found this to be impossible
 	// return false quickly
-	cached, ok := (*cache)[point]
-	if ok && !cached {
+	if (*unreachable)[point] {
 		return make([]RobotMazePoint, 0), false
 	}
 
-	if path, ok := robotMazePath(maze, row-1, col, cache); ok {
+	if path, ok := robotMazePath(maze, row-1, col, unreachable); ok {
 		path = append(path, point)
 		return path, true
 	}
 
-	if path, ok := robotMazePath(maze, row, col-1, cache); ok {
+	if path, ok := robotMazePath(maze, row, col-1, unreachable); ok {
 		path = append(path, point)
 		return path, true
 	}
 
-	(*cache)[point] = false
+	(*unreachable)[point] = true
 	return make([]RobotMazePoint, 0), false
 }
 
