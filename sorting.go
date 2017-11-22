@@ -51,28 +51,37 @@ func MergeSort(array []int) []int {
 }
 
 func QuickSort(array []int) []int {
+	sorted := make([]int, len(array))
+	copy(sorted, array)
+
+	quickSort(sorted)
+	return sorted
+}
+
+func quickSort(array []int) {
 	if len(array) < 2 {
-		return array
+		return
 	}
 
-	// pivot on the first element
-	pivot := array[0]
+	// pivot on the last element
+	// just so we don't have to move it
+	pivotIndex := len(array) - 1
+	pivot := array[len(array)-1]
 
-	left := make([]int, 0, len(array)) // we'll use this as our return
-	right := make([]int, 0, len(array)-1)
+	leftIndex := 0
 
-	for _, element := range array[1:] {
+	for i, element := range array[:pivotIndex] {
 		if element < pivot {
-			left = append(left, element)
-		} else {
-			right = append(right, element)
+			if i != leftIndex {
+				array[i], array[leftIndex] = array[leftIndex], array[i]
+			}
+			leftIndex++
 		}
 	}
 
-	leftSorted := QuickSort(left)
-	copy(left, leftSorted)
-	left = append(left, pivot)
-	left = append(left, QuickSort(right)...)
+	// swap the pivot to the middle
+	array[leftIndex], array[pivotIndex] = array[pivotIndex], array[leftIndex]
 
-	return left
+	quickSort(array[:leftIndex])
+	quickSort(array[leftIndex+1:])
 }
