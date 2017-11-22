@@ -8,9 +8,7 @@ func BubbleSort(array []int) []int {
 		bubbled := false
 		for i := 0; i < len(sorted)-1; i++ {
 			if sorted[i+1] < sorted[i] {
-				tmp := sorted[i+1]
-				sorted[i+1] = sorted[i]
-				sorted[i] = tmp
+				sorted[i+1], sorted[i] = sorted[i], sorted[i+1]
 				bubbled = true
 			}
 		}

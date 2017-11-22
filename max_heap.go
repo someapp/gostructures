@@ -20,9 +20,7 @@ func (mh *MaxHeap) Insert(value int) {
 		if mh.tree[index] < mh.tree[up] {
 			break
 		}
-		tmp := mh.tree[index]
-		mh.tree[index] = mh.tree[up]
-		mh.tree[up] = tmp
+		mh.tree[index], mh.tree[up] = mh.tree[up], mh.tree[index]
 
 		// next
 		index = up
@@ -54,9 +52,7 @@ func (mh *MaxHeap) Pop() {
 		}
 
 		if mh.tree[left] > mh.tree[i] {
-			tmp := mh.tree[left]
-			mh.tree[left] = mh.tree[i]
-			mh.tree[i] = tmp
+			mh.tree[left], mh.tree[i] = mh.tree[i], mh.tree[left]
 		}
 
 		i = left
