@@ -84,9 +84,7 @@ func GraphConnected(g *Graph, from, to string) bool {
 			return true
 		}
 
-		for _, neighbour := range node.neighbours {
-			queue = append(queue, neighbour)
-		}
+		queue = append(queue, node.neighbours...)
 	}
 
 	return false
