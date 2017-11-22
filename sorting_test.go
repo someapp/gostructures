@@ -67,20 +67,23 @@ func sortingBenchmark() []int {
 	return []int{30, 85, 45, 53, 4, 10, 44, 33, 97, 3, 34, 74, 15, 7, 40, 73, 46, 82, 32, 63, 62, 25, 50, 76, 2, 21, 5, 47, 8, 65, 52, 39, 96, 66, 89, 67, 58, 68, 14, 57, 92, 38, 17, 35, 60, 18, 48, 83, 27, 13, 72, 28, 86, 70, 20, 59, 95, 69, 9, 75, 87, 94, 81, 42, 98, 80, 26, 22, 88, 78, 90, 61, 41, 77, 16, 1, 84, 11, 51, 100, 99, 6, 79, 49, 43, 93, 64, 54, 91, 55, 29, 37, 71, 19, 56, 12, 23, 24, 36, 31}
 }
 
+// avoid optimising it away
+var sortingBenchmarkValue []int
+
 func BenchmarkBubbleSort(b *testing.B) {
 	for n := 0; n < b.N; n++ {
-		BubbleSort(sortingBenchmark())
+		sortingBenchmarkValue = BubbleSort(sortingBenchmark())
 	}
 }
 
 func BenchmarkMergeSort(b *testing.B) {
 	for n := 0; n < b.N; n++ {
-		MergeSort(sortingBenchmark())
+		sortingBenchmarkValue = MergeSort(sortingBenchmark())
 	}
 }
 
 func BenchmarkQuickSort(b *testing.B) {
 	for n := 0; n < b.N; n++ {
-		QuickSort(sortingBenchmark())
+		sortingBenchmarkValue = QuickSort(sortingBenchmark())
 	}
 }
