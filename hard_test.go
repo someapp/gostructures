@@ -84,3 +84,153 @@ func TestHard07(t *testing.T) {
 		t.Errorf("combined names are wrong\nexpected: %v\nactual:   %v", expected, actual)
 	}
 }
+
+func IsHoppable(array []uint) bool {
+	if len(array) == 0 {
+		return true
+	}
+	if len(array) == 1 {
+		return array[0] > 0
+	}
+
+	// go back from 1 to n steps from the end
+	// if the height is >= i, then we can hop from there
+	for i := 1; i <= len(array); i++ {
+		candidate := len(array) - i
+		if array[candidate] >= uint(i) {
+			if IsHoppable(array[:candidate]) {
+				//	fmt.Println("is hoppable:", array[:candidate])
+				return true
+			}
+		}
+	}
+	return false
+}
+
+func TestIsHoppable(t *testing.T) {
+	array := []uint{4, 2, 0, 0, 2, 0}
+	if !IsHoppable(array) {
+		t.Errorf("should be hoppable")
+	}
+
+	// add another 0, so its no longer hoppable
+	array = append(array, 0)
+	if IsHoppable(array) {
+		t.Errorf("should not be hoppable")
+	}
+
+	// when it can't even start
+	array = []uint{4, 3, 2, 1, 0, 5, 5, 5, 5}
+	if IsHoppable(array) {
+		t.Errorf("should not be hoppable")
+	}
+
+	// when it can only finish right from the start
+	array = []uint{8, 0, 0, 0, 0, 0, 0, 0}
+	if !IsHoppable(array) {
+		t.Errorf("should be hoppable")
+	}
+
+	// but add another, and again its not hoppable
+	array = append(array, 0)
+	if IsHoppable(array) {
+		t.Errorf("should not be hoppable")
+	}
+}
+
+func LongestConsecutiveCharacter(chars string) (rune, int) {
+	maxChar := '?'
+	maxCount := 0
+	char := '?'
+	count := 0
+
+	for _, c := range chars {
+		if c == char {
+			count++
+		} else {
+			char = c
+			count = 1
+		}
+		if count > maxCount {
+			maxChar = char
+			maxCount = count
+		}
+	}
+
+	return maxChar, maxCount
+}
+
+func TestLongestConsecutiveCharacter(t *testing.T) {
+	var char rune
+	var length int
+
+	char, length = LongestConsecutiveCharacter("A")
+	if char != 'A' || length != 1 {
+		t.Errorf("expected: A, 1, actual: %v, %d", char, length)
+	}
+
+	char, length = LongestConsecutiveCharacter("AAAAA")
+	if char != 'A' || length != 5 {
+		t.Errorf("expected: A, 5, actual: %v, %d", char, length)
+	}
+
+	char, length = LongestConsecutiveCharacter("AABCDDBBBEA")
+	if char != 'B' || length != 3 {
+		t.Errorf("expected: B, 3, actual: %v, %d", char, length)
+	}
+}
+
+func LongestCommonSubsequence(p, q []rune) []rune {
+	cache := make(map[[2]string][]rune)
+
+	return longestCommonSubsequence(p, q, &cache)
+}
+
+func longestCommonSubsequence(p, q []rune, cache *map[[2]string][]rune) []rune {
+	cacheKey := [2]string{string(p), string(q)}
+	if cached, ok := (*cache)[cacheKey]; ok {
+		return cached
+	}
+
+	if len(p) == 0 || len(q) == 0 {
+		return []rune{}
+	} else if p[len(p)-1] == q[len(q)-1] {
+		result := longestCommonSubsequence(p[:len(p)-1], q[:len(q)-1], cache)
+		result = append(result, p[len(p)-1])
+
+		(*cache)[cacheKey] = result
+		return result
+	} else {
+		result1 := longestCommonSubsequence(p[:len(p)], q[:len(q)-1], cache)
+		result2 := longestCommonSubsequence(p[:len(p)-1], q[:len(q)], cache)
+
+		if len(result2) > len(result1) {
+			result1 = result2
+		}
+
+		(*cache)[cacheKey] = result1
+		return result1
+	}
+}
+
+func TestLongestCommonSubsequence(t *testing.T) {
+	var p, q, expected, actual []rune
+
+	p = []rune("BATD")
+	q = []rune("ABACD")
+	expected = []rune("BAD")
+
+	actual = LongestCommonSubsequence(p, q)
+	if !reflect.DeepEqual(actual, expected) {
+		t.Errorf("expected: %v, actual: %v", string(expected), string(actual))
+	}
+
+	p = []rune("ABCDEFGHIJKLMNOPQRSTUVWXYZ")
+	q = []rune("ZYXWVUTSRQPONMLKJIHGFEDCBA")
+	expected = []rune("Z")
+
+	actual = LongestCommonSubsequence(p, q)
+	if !reflect.DeepEqual(actual, expected) {
+		t.Errorf("expected: %v, actual: %v", string(expected), string(actual))
+	}
+}
