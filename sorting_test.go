@@ -68,22 +68,22 @@ func sortingBenchmark() []int {
 }
 
 // avoid optimising it away
-var sortingBenchmarkValue []int
+var benchmarkValue interface{}
 
 func BenchmarkBubbleSort(b *testing.B) {
 	for n := 0; n < b.N; n++ {
-		sortingBenchmarkValue = BubbleSort(sortingBenchmark())
+		benchmarkValue = BubbleSort(sortingBenchmark())
 	}
 }
 
 func BenchmarkMergeSort(b *testing.B) {
 	for n := 0; n < b.N; n++ {
-		sortingBenchmarkValue = MergeSort(sortingBenchmark())
+		benchmarkValue = MergeSort(sortingBenchmark())
 	}
 }
 
 func BenchmarkQuickSort(b *testing.B) {
 	for n := 0; n < b.N; n++ {
-		sortingBenchmarkValue = QuickSort(sortingBenchmark())
+		benchmarkValue = QuickSort(sortingBenchmark())
 	}
 }
