@@ -244,12 +244,12 @@ func TestLongestCommonSubsequence(t *testing.T) {
 // maximised:
 //   { 30,     60,     45,         45 }
 //
-func Hard17(array []int) int {
+func Hard16(array []int) int {
 	cache := make(map[int]int)
-	return hard17(array, 0, &cache)
+	return hard16(array, 0, &cache)
 }
 
-func hard17(array []int, index int, cache *map[int]int) int {
+func hard16(array []int, index int, cache *map[int]int) int {
 	if index >= len(array) {
 		return 0
 	}
@@ -259,8 +259,8 @@ func hard17(array []int, index int, cache *map[int]int) int {
 	}
 
 	// including the first element or not
-	with := array[index] + hard17(array, index+2, cache)
-	without := hard17(array, index+1, cache)
+	with := array[index] + hard16(array, index+2, cache)
+	without := hard16(array, index+1, cache)
 
 	if with > without {
 		(*cache)[index] = with
@@ -271,15 +271,15 @@ func hard17(array []int, index int, cache *map[int]int) int {
 	}
 }
 
-func TestHard17(t *testing.T) {
+func TestHard16(t *testing.T) {
 	// example 1 -> {30, 60, 45, 45}
-	out := Hard17([]int{30, 15, 60, 75, 45, 15, 15, 45})
+	out := Hard16([]int{30, 15, 60, 75, 45, 15, 15, 45})
 	if out != 180 {
 		t.Errorf("didn't get the result we expected")
 	}
 
 	// example 2 -> {75, 120, 135}
-	out = Hard17([]int{75, 105, 120, 75, 90, 135})
+	out = Hard16([]int{75, 105, 120, 75, 90, 135})
 	if out != 330 {
 		t.Errorf("didn't get the result we expected")
 	}
