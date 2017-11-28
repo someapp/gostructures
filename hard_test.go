@@ -244,44 +244,43 @@ func TestLongestCommonSubsequence(t *testing.T) {
 // maximised:
 //   { 30,     60,     45,         45 }
 //
-// TODO: cache the results
-//
-func Hard17(array []int) (int, []int) {
-	if len(array) == 0 {
-		return 0, []int{}
+func Hard17(array []int) int {
+	cache := make(map[int]int)
+	return hard17(array, 0, &cache)
+}
+
+func hard17(array []int, index int, cache *map[int]int) int {
+	if index >= len(array) {
+		return 0
 	}
-	if len(array) == 1 {
-		return array[0], []int{array[0]}
+
+	if cached, ok := (*cache)[index]; ok {
+		return cached
 	}
 
 	// including the first element or not
-	withTotal, withList := Hard17(array[2:])
-	withTotal += array[0]
-	withoutTotal, withoutList := Hard17(array[1:])
+	with := array[index] + hard17(array, index+2, cache)
+	without := hard17(array, index+1, cache)
 
-	if withTotal > withoutTotal {
-		return withTotal, withList
+	if with > without {
+		(*cache)[index] = with
+		return with
 	} else {
-		return withoutTotal, withoutList
+		(*cache)[index] = without
+		return without
 	}
 }
 
 func TestHard17(t *testing.T) {
-	// example 1
-	outTotal, outList := Hard17([]int{30, 15, 60, 75, 45, 15, 15, 45})
-	if outTotal != 180 {
-		t.Errorf("didn't get the result we expected")
-	}
-	if reflect.DeepEqual(outList, []int{30, 60, 45, 45}) {
+	// example 1 -> {30, 60, 45, 45}
+	out := Hard17([]int{30, 15, 60, 75, 45, 15, 15, 45})
+	if out != 180 {
 		t.Errorf("didn't get the result we expected")
 	}
 
-	// example 2
-	outTotal, outList = Hard17([]int{75, 105, 120, 75, 90, 135})
-	if outTotal != 330 {
-		t.Errorf("didn't get the result we expected")
-	}
-	if reflect.DeepEqual(outList, []int{75, 120, 135}) {
+	// example 2 -> {75, 120, 135}
+	out = Hard17([]int{75, 105, 120, 75, 90, 135})
+	if out != 330 {
 		t.Errorf("didn't get the result we expected")
 	}
 }
