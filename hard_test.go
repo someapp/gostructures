@@ -273,22 +273,17 @@ func hard16(array []int, index int, cache *map[int]int) int {
 }
 
 func Hard16Iterative(array []int) int {
-	best := make([]int, len(array)+3) // buffer with some trailing 0s
+	best := make([]int, len(array)+2) // buffer with some trailing 0s
 
 	for i := len(array) - 1; i >= 0; i-- {
 		// take this element and skip the next one
 		with := array[i] + best[i+2]
 
-		// take this element and skip the next two
-		withSkip := array[i] + best[i+3]
-
 		// don't take this element
 		without := best[i+1]
 
-		if with > withSkip && with > without {
+		if with > without {
 			best[i] = with
-		} else if withSkip > without {
-			best[i] = withSkip
 		} else {
 			best[i] = without
 		}
