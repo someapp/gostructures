@@ -1,6 +1,7 @@
 package gostructures
 
 import (
+	"fmt"
 	"reflect"
 	"testing"
 )
@@ -271,16 +272,59 @@ func hard16(array []int, index int, cache *map[int]int) int {
 	}
 }
 
+func Hard16Iterative(array []int) int {
+	best := make([]int, len(array)+3) // buffer with some trailing 0s
+
+	for i := len(array) - 1; i >= 0; i-- {
+		// take this element and skip the next one
+		with := array[i] + best[i+2]
+
+		// take this element and skip the next two
+		withSkip := array[i] + best[i+3]
+
+		// don't take this element
+		without := best[i+1]
+
+		if with > withSkip && with > without {
+			best[i] = with
+		} else if withSkip > without {
+			best[i] = withSkip
+		} else {
+			best[i] = without
+		}
+	}
+	return best[0]
+}
+
 func TestHard16(t *testing.T) {
-	// example 1 -> {30, 60, 45, 45}
-	out := Hard16([]int{30, 15, 60, 75, 45, 15, 15, 45})
-	if out != 180 {
-		t.Errorf("didn't get the result we expected")
+	testcases := []struct {
+		in, out []int
+		sum     int
+	}{
+		{
+			in:  []int{30, 15, 60, 75, 45, 15, 15, 45},
+			out: []int{30, 60, 45, 45},
+			sum: 180,
+		},
+
+		{
+			in:  []int{75, 105, 120, 75, 90, 135},
+			out: []int{75, 120, 135},
+			sum: 330,
+		},
 	}
 
-	// example 2 -> {75, 120, 135}
-	out = Hard16([]int{75, 105, 120, 75, 90, 135})
-	if out != 330 {
-		t.Errorf("didn't get the result we expected")
+	for _, tt := range testcases {
+		t.Run(fmt.Sprintf("%v", tt.in), func(t *testing.T) {
+			actual1 := Hard16(tt.in)
+			if actual1 != tt.sum {
+				t.Errorf("Hard16 returned the wrong sum")
+			}
+
+			actual2 := Hard16Iterative(tt.in)
+			if actual2 != tt.sum {
+				t.Errorf("Hard16Iterative returned the wrong sum")
+			}
+		})
 	}
 }
