@@ -234,3 +234,54 @@ func TestLongestCommonSubsequence(t *testing.T) {
 		t.Errorf("expected: %v, actual: %v", string(expected), string(actual))
 	}
 }
+
+// given a list of integers,
+// we need to choose a sublist which consists of no consecutive elements
+// such that the sum of elements is maximised
+//
+// eg.
+// 	 { 30, 15, 60, 75, 45, 15, 15, 45 }
+// maximised:
+//   { 30,     60,     45,         45 }
+//
+// TODO: cache the results
+//
+func Hard17(array []int) (int, []int) {
+	if len(array) == 0 {
+		return 0, []int{}
+	}
+	if len(array) == 1 {
+		return array[0], []int{array[0]}
+	}
+
+	// including the first element or not
+	withTotal, withList := Hard17(array[2:])
+	withTotal += array[0]
+	withoutTotal, withoutList := Hard17(array[1:])
+
+	if withTotal > withoutTotal {
+		return withTotal, withList
+	} else {
+		return withoutTotal, withoutList
+	}
+}
+
+func TestHard17(t *testing.T) {
+	// example 1
+	outTotal, outList := Hard17([]int{30, 15, 60, 75, 45, 15, 15, 45})
+	if outTotal != 180 {
+		t.Errorf("didn't get the result we expected")
+	}
+	if reflect.DeepEqual(outList, []int{30, 60, 45, 45}) {
+		t.Errorf("didn't get the result we expected")
+	}
+
+	// example 2
+	outTotal, outList = Hard17([]int{75, 105, 120, 75, 90, 135})
+	if outTotal != 330 {
+		t.Errorf("didn't get the result we expected")
+	}
+	if reflect.DeepEqual(outList, []int{75, 120, 135}) {
+		t.Errorf("didn't get the result we expected")
+	}
+}
