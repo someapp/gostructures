@@ -24,7 +24,7 @@ func newTrieNode() *trieNode {
 }
 
 func (t *Trie) AddWord(word string) {
-	t.root.addWord([]rune(word))
+	t.root.addWord(runeWord(word))
 }
 
 func (t *Trie) ContainsWord(word string) bool {
@@ -55,7 +55,7 @@ func (t *Trie) WordsWithPrefix(prefix string) []string {
 	return rtn
 }
 
-func (t *trieNode) addWord(word []rune) {
+func (t *trieNode) addWord(word runeWord) {
 	if len(word) == 0 {
 		t.isWord = true
 		return
@@ -69,7 +69,7 @@ func (t *trieNode) addWord(word []rune) {
 	node.addWord(tail)
 }
 
-func (t *trieNode) containsWord(word []rune) bool {
+func (t *trieNode) containsWord(word runeWord) bool {
 	if len(word) == 0 {
 		return t.isWord
 	}
@@ -80,7 +80,7 @@ func (t *trieNode) containsWord(word []rune) bool {
 	return false
 }
 
-func (t *trieNode) nodeForWord(word []rune) (*trieNode, bool) {
+func (t *trieNode) nodeForWord(word runeWord) (*trieNode, bool) {
 	if len(word) == 0 {
 		return t, true
 	}
