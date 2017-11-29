@@ -323,3 +323,59 @@ func TestHard16(t *testing.T) {
 		})
 	}
 }
+
+// given a long word, and a list of shorter words
+// find which shorter words are contained in the long word
+func Hard17(longWord string, words []string) []string {
+	found := make([]string, 0)
+
+	for _, word := range words {
+		for i := 0; i <= len(longWord)-len(word); i++ {
+			if longWord[i:i+len(word)] == word {
+				found = append(found, word)
+				break
+			}
+		}
+	}
+
+	return found
+}
+
+func TestHard17(t *testing.T) {
+	testcases := []struct {
+		longWord   string
+		shortWords []string
+		expected   []string
+	}{
+		{
+			longWord: "carpoolkaraoke",
+			shortWords: []string{
+				"car",
+				"cars",
+				"bar",
+				"pool",
+				"carpool",
+				"school",
+				"karaoke",
+				"beer",
+			},
+			expected: []string{
+				"car",
+				"pool",
+				"carpool",
+				"karaoke",
+			},
+		},
+	}
+
+	for _, tt := range testcases {
+		t.Run(tt.longWord, func(t *testing.T) {
+			found := Hard17(tt.longWord, tt.shortWords)
+
+			if !reflect.DeepEqual(found, tt.expected) {
+				t.Errorf("not what we expected %v, %v", found, tt.expected)
+			}
+		})
+	}
+
+}
