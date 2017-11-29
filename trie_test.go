@@ -1,6 +1,7 @@
 package gostructures
 
 import (
+	"reflect"
 	"testing"
 )
 
@@ -27,6 +28,20 @@ func TestTrie(t *testing.T) {
 	for _, word := range []string{"test", "tests", "redherring"} {
 		if !trie.ContainsWord(word) {
 			t.Errorf("should contain %v", word)
+		}
+	}
+
+	expected := []string{"redherring", "test", "tests"}
+	actual := trie.Words()
+	if !reflect.DeepEqual(actual, expected) {
+		t.Errorf("expected words with prefix %v, %v", expected, actual)
+	}
+	expected = []string{"test", "tests"}
+
+	for _, prefix := range []string{"t", "te", "tes", "test"} {
+		actual := trie.WordsWithPrefix(prefix)
+		if !reflect.DeepEqual(actual, expected) {
+			t.Errorf("expected words with prefix %v, %v", expected, actual)
 		}
 	}
 }
