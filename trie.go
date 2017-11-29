@@ -28,18 +28,14 @@ func (t *Trie) AddWord(word string) {
 }
 
 func (t *Trie) ContainsWord(word string) bool {
-	return t.root.containsWord([]rune(word))
+	if node, ok := t.root.nodeForWord(runeWord(word)); ok {
+		return node.isWord
+	}
+	return false
 }
 
 func (t *Trie) Words() []string {
-	words := make([]runeWord, 0)
-	t.root.words([]rune{}, &words)
-
-	rtn := make([]string, len(words))
-	for i, word := range words {
-		rtn[i] = string(word)
-	}
-	return rtn
+	return t.WordsWithPrefix("")
 }
 
 func (t *Trie) WordsWithPrefix(prefix string) []string {
