@@ -107,3 +107,17 @@ graph.AddEdge("a", "c")
 assert(GraphConnected(&graph, "a", "b"))
 assert(!GraphConnected(&graph, "b", "c"))
 ```
+
+[Trie](trie.go)
+
+A trie implemented as a tree
+
+``` go
+trie := NewTrie()
+trie.AddWord("test")
+
+assert(trie.ContainsWord("test"))
+assert(!trie.ContainsWord("tes"))
+
+assert(trie.WordsWithPrefix("tes") == []string{"test"})
+```
