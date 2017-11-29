@@ -27,6 +27,11 @@ func (t *Trie) AddWord(word string) {
 	t.root.addWord(runeWord(word))
 }
 
+func (t *Trie) ContainsPrefix(word string) bool {
+	_, ok := t.root.nodeForWord(runeWord(word))
+	return ok
+}
+
 func (t *Trie) ContainsWord(word string) bool {
 	if node, ok := t.root.nodeForWord(runeWord(word)); ok {
 		return node.isWord

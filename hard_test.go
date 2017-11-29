@@ -341,6 +341,22 @@ func Hard17(longWord string, words []string) []string {
 	return found
 }
 
+func Hard17Trie(longWord string, words []string) []string {
+	found := make([]string, 0)
+	trie := NewTrie()
+	for i := 0; i < len(longWord); i++ {
+		trie.AddWord(longWord[i:])
+	}
+
+	for _, word := range words {
+		if trie.ContainsPrefix(word) {
+			found = append(found, word)
+		}
+	}
+
+	return found
+}
+
 func TestHard17(t *testing.T) {
 	testcases := []struct {
 		longWord   string
@@ -370,12 +386,15 @@ func TestHard17(t *testing.T) {
 
 	for _, tt := range testcases {
 		t.Run(tt.longWord, func(t *testing.T) {
-			found := Hard17(tt.longWord, tt.shortWords)
+			found1 := Hard17(tt.longWord, tt.shortWords)
+			found2 := Hard17Trie(tt.longWord, tt.shortWords)
 
-			if !reflect.DeepEqual(found, tt.expected) {
-				t.Errorf("not what we expected %v, %v", found, tt.expected)
+			if !reflect.DeepEqual(found1, tt.expected) {
+				t.Errorf("not what we expected %v, %v", found1, tt.expected)
+			}
+			if !reflect.DeepEqual(found2, tt.expected) {
+				t.Errorf("not what we expected %v, %v", found2, tt.expected)
 			}
 		})
 	}
-
 }
