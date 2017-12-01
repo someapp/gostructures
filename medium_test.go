@@ -1,19 +1,27 @@
 package gostructures
 
-import "testing"
+import (
+	"reflect"
+	"testing"
+)
 
-func MaximumSubarray(array []int) int {
+func MaximumSubarray(array []int) (int, []int) {
 	max := 0
+	best := []int{}
 	sum := 0
+	current := []int{}
 	for _, element := range array {
 		sum += element
+		current = append(current, element)
 		if sum > max {
 			max = sum
+			best = current
 		} else if sum < 0 {
 			sum = 0
+			current = []int{}
 		}
 	}
-	return max
+	return max, best
 }
 
 func TestMaximumSubarray(t *testing.T) {
@@ -60,9 +68,13 @@ func TestMaximumSubarray(t *testing.T) {
 
 	for _, tt := range testcases {
 		t.Run(tt.name, func(t *testing.T) {
-			actual := MaximumSubarray(tt.array)
-			if actual != tt.max {
-				t.Errorf("max wrong: %v %v", actual, tt.max)
+			actualSum, actualSubarray := MaximumSubarray(tt.array)
+			if actualSum != tt.max {
+				t.Errorf("max wrong: %v %v", actualSum, tt.max)
+			}
+
+			if !reflect.DeepEqual(actualSubarray, tt.subarray) {
+				t.Errorf("subarray wrong: %v %v", actualSubarray, tt.subarray)
 			}
 		})
 	}
