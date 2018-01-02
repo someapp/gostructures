@@ -109,6 +109,7 @@ assert(!GraphConnected(&graph, "b", "c"))
 ```
 
 [Trie](trie.go)
+---------------
 
 A trie implemented as a tree
 
